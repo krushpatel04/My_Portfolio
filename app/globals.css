@@ -30,6 +30,9 @@ body {
   background-color: var(--bg);
   color: var(--fg);
   font-family: var(--font-geist-sans), Arial, sans-serif;
+}
+
+body.theme-ready {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
