@@ -166,7 +166,7 @@ export default function Portfolio() {
       <main className="max-w-2xl mx-auto px-6 pb-24">
 
         {/* ── Hero ──────────────────────────────────────────────────────── */}
-        <section className="flex flex-col justify-center pt-32 pb-16">
+        <section className="relative min-h-screen flex flex-col justify-center pt-14 pb-16">
           <h1
             style={{ color: "var(--fg)" }}
             className="text-4xl sm:text-6xl font-bold tracking-tight mb-6 leading-tight"
