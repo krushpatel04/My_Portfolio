@@ -76,6 +76,7 @@ export const projects = [
     description:
       "A fully playable recreation of the first Legend of Zelda dungeon built in a 5-person agile team using Jira and Git. Implemented HUD systems, map/mini-map rendering, and sprite-based gameplay mechanics. Also built a physical ESP32 controller in Arduino/C for real-time serial input.",
     link: "https://github.com/LiamG5/sprint0",
+    youtube: "https://youtu.be/J4wWH2GWCQ4",
   },
   {
     name: "Systems Programming Coursework",

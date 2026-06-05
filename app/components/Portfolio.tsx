@@ -108,17 +108,30 @@ function ProjectsSection() {
                   <h3 className="font-semibold text-sm" style={{ color: "var(--fg)" }}>{p.name}</h3>
                   <span style={{ color: "var(--muted)" }} className="text-xs">{p.date}</span>
                 </div>
-                {p.link && (
-                  <a
-                    href={p.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: "var(--accent)" }}
-                    className="text-xs shrink-0 transition-opacity hover:opacity-70 mt-0.5"
-                  >
-                    GitHub ↗
-                  </a>
-                )}
+                <div className="flex flex-col items-end gap-1 shrink-0">
+                  {p.link && (
+                    <a
+                      href={p.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: "var(--accent)" }}
+                      className="text-xs transition-opacity hover:opacity-70"
+                    >
+                      GitHub ↗
+                    </a>
+                  )}
+                  {p.youtube && (
+                    <a
+                      href={p.youtube}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: "var(--accent)" }}
+                      className="text-xs transition-opacity hover:opacity-70"
+                    >
+                      Watch here ↗
+                    </a>
+                  )}
+                </div>
               </div>
               <p style={{ color: "var(--muted)" }} className="text-sm leading-relaxed mb-3">{p.description}</p>
               <div className="flex flex-wrap gap-1.5">
