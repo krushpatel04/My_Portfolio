@@ -3,13 +3,14 @@
 import { useState, useEffect, useRef } from "react";
 
 const FULL_TEXT = "Hello, I'm Krush!";
-const TYPE_SPEED = 110;       // ms per character
+const TYPE_SPEED = 155;       // ms per character
 const START_DELAY = 1400;     // pause before first keystroke
 const MID_PAUSE = 500;        // pause between "Hello," and "I'm Krush!"
 const PAUSE_AT = 7;           // character index to pause at ("Hello, ")
 
 export default function TypeWriter({ onDone }: { onDone?: () => void }) {
   const [displayed, setDisplayed] = useState("");
+  const [done, setDone] = useState(false);
   const onDoneRef = useRef(onDone);
   onDoneRef.current = onDone;
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -19,6 +20,7 @@ export default function TypeWriter({ onDone }: { onDone?: () => void }) {
 
     const typeNext = () => {
       if (i >= FULL_TEXT.length) {
+        setDone(true);
         onDoneRef.current?.();
         return;
       }
@@ -38,9 +40,11 @@ export default function TypeWriter({ onDone }: { onDone?: () => void }) {
   return (
     <span>
       {displayed}
-      <span className="cursor-blink" style={{ color: "var(--accent)", marginLeft: "2px" }}>
-        |
-      </span>
+      {!done && (
+        <span className="cursor-blink" style={{ color: "var(--accent)", marginLeft: "2px" }}>
+          |
+        </span>
+      )}
     </span>
   );
 }
