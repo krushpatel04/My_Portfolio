@@ -58,7 +58,7 @@ export const experience = [
   },
   {
     company: "Patel Family Enterprises",
-    role: "Owner/Operator",
+    role: "Manager",
     period: "Jan 2019 – Dec 2025",
     location: "Parma, OH",
     tech: [],
