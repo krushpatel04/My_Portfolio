@@ -41,7 +41,7 @@ export default function TypeWriter({ onDone }: { onDone?: () => void }) {
     <span>
       {displayed}
       {!done && (
-        <span className="cursor-blink" style={{ color: "var(--accent)", marginLeft: "2px" }}>
+        <span className="cursor-blink" style={{ color: "var(--accent)", marginLeft: "2px", willChange: "opacity" }}>
           |
         </span>
       )}
