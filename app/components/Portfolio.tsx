@@ -7,7 +7,7 @@ import {
   useTransform,
 } from "framer-motion";
 import Image from "next/image";
-import { experience } from "../data/resume";
+import { experience, projects } from "../data/resume";
 import ThemeToggle from "./ThemeToggle";
 import TypeWriter from "./TypeWriter";
 
@@ -48,7 +48,7 @@ function ExperienceCard({
       <div className="max-w-2xl mx-auto px-6 w-full">
         {/* Index + period */}
         <p
-          style={{ color: "var(--border)" }}
+          style={{ color: "var(--body)" }}
           className="text-xs font-mono mb-6 tracking-widest uppercase"
         >
           {String(index + 1).padStart(2, "0")} &middot; {job.period}
@@ -63,8 +63,9 @@ function ExperienceCard({
         </h2>
 
         {/* Role + location */}
-        <p style={{ color: "var(--muted)" }} className="text-sm mb-8">
-          {job.role}&ensp;&middot;&ensp;{job.location}
+        <p className="text-sm mb-8">
+          <span style={{ color: "var(--accent)" }}>{job.role}</span>
+          <span style={{ color: "var(--muted)" }}>&ensp;&middot;&ensp;{job.location}</span>
         </p>
 
         {/* Tech tags */}
@@ -145,12 +146,19 @@ function HorizontalTimeline() {
 
   return (
     /* Tall wrapper — acts as the scroll track */
-    <div ref={wrapperRef} style={{ height: `${N * 100}vh` }}>
+    <div
+      ref={wrapperRef}
+      style={{
+        height: `${N * 100}vh`,
+        position: "relative",
+        zIndex: 3,
+        background: "var(--bg)",
+      }}
+    >
       {/*
        * Sticky container: pins to viewport top while the wrapper scrolls.
        * overflow:hidden clips off-screen cards (no horizontal page overflow).
-       * zIndex:3 sits above the fixed hero (zIndex:2) so the timeline
-       * slides up naturally from beneath as the hero push-back plays.
+       * zIndex is inherited from the wrapper's stacking context (z=3).
        */}
       <div
         style={{
@@ -158,8 +166,6 @@ function HorizontalTimeline() {
           top: 0,
           height: "100vh",
           overflow: "hidden",
-          zIndex: 3,
-          background: "var(--bg)",
         }}
       >
         {/* Horizontal flex track — transform driven directly by RAF */}
@@ -219,6 +225,102 @@ function HorizontalTimeline() {
         </div>
       </div>
     </div>
+  );
+}
+
+/* ─── Projects section ──────────────────────────────────────────────────── */
+
+function ProjectsSection() {
+  return (
+    <section
+      id="projects"
+      style={{
+        background: "var(--bg)",
+        minHeight: "100vh",
+        position: "relative",
+        zIndex: 3,
+      }}
+    >
+      <div className="max-w-2xl mx-auto px-6 pt-24 pb-32">
+        <p
+          style={{ color: "var(--body)" }}
+          className="text-xs font-mono mb-12 tracking-widest uppercase"
+        >
+          Projects
+        </p>
+
+        <div className="space-y-24">
+          {projects.map((proj, i) => (
+            <div key={i}>
+              {/* Name */}
+              <h2
+                style={{ color: "var(--fg)" }}
+                className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-none mb-2"
+              >
+                {proj.name}
+              </h2>
+
+              {/* Date */}
+              <p
+                style={{ color: "var(--muted)" }}
+                className="text-xs font-mono mb-5"
+              >
+                {proj.date}
+              </p>
+
+              {/* Tech tags */}
+              {proj.tech.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {proj.tech.map((t) => (
+                    <Tag key={t} label={t} />
+                  ))}
+                </div>
+              )}
+
+              {/* Description */}
+              <p
+                style={{ color: "var(--body)" }}
+                className="text-sm leading-relaxed mb-6 max-w-lg"
+              >
+                {proj.description}
+              </p>
+
+              {/* Links */}
+              <div className="flex flex-wrap gap-3">
+                {proj.link && (
+                  <a
+                    href={proj.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      color: "var(--accent)",
+                      borderColor: "var(--border)",
+                    }}
+                    className="text-sm border px-4 py-1.5 rounded-lg transition-opacity hover:opacity-70"
+                  >
+                    GitHub ↗
+                  </a>
+                )}
+                {"youtube" in proj && (proj as { youtube: string }).youtube && (
+                  <a
+                    href={(proj as { youtube: string }).youtube}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      color: "var(--accent)",
+                      borderColor: "var(--border)",
+                    }}
+                    className="text-sm border px-4 py-1.5 rounded-lg transition-opacity hover:opacity-70"
+                  >
+                    Demo ↗
+                  </a>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -416,6 +518,7 @@ export default function Portfolio() {
        * experience cards as the user scrolls down.
        */}
       <HorizontalTimeline />
+      <ProjectsSection />
     </>
   );
 }
