@@ -436,11 +436,12 @@ export default function Portfolio() {
               >
                 <div className="shrink-0">
                   <Image
-                    src="/headShot.jpeg"
+                    src="/My_Portfolio/headShot.jpeg"
                     alt="Krush Patel"
                     width={160}
                     height={200}
                     className="rounded-xl object-cover"
+                    unoptimized
                   />
                 </div>
                 <div>
