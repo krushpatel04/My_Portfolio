@@ -37,11 +37,6 @@ body.theme-ready {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Hide default cursor on pointer devices when custom cursor is active */
-@media (pointer: fine) {
-  * { cursor: none !important; }
-}
-
 /* Blinking cursor for typing animation */
 @keyframes blink {
   0%, 100% { opacity: 1 }
