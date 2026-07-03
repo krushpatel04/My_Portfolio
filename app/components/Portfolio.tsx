@@ -33,11 +33,9 @@ function Tag({ label }: { label: string }) {
 function ExperienceCard({
   job,
   index,
-  total,
 }: {
   job: (typeof experience)[0];
   index: number;
-  total: number;
 }) {
   return (
     /* Each card is exactly 100vw wide inside the N×100vw flex track */
@@ -180,7 +178,7 @@ function HorizontalTimeline() {
           }}
         >
           {experience.map((job, i) => (
-            <ExperienceCard key={i} job={job} index={i} total={N} />
+            <ExperienceCard key={i} job={job} index={i} />
           ))}
         </div>
 
