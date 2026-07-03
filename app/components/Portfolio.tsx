@@ -8,6 +8,7 @@ import {
 } from "framer-motion";
 import Image from "next/image";
 import { experience, projects, Job } from "../data/resume";
+import PillLink from "./PillLink";
 import ThemeToggle from "./ThemeToggle";
 import TypeWriter from "./TypeWriter";
 
@@ -285,33 +286,9 @@ function ProjectsSection() {
 
               {/* Links */}
               <div className="flex flex-wrap gap-3">
-                {proj.link && (
-                  <a
-                    href={proj.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      color: "var(--accent)",
-                      borderColor: "var(--border)",
-                    }}
-                    className="text-sm border px-4 py-1.5 rounded-lg transition-opacity hover:opacity-70"
-                  >
-                    GitHub ↗
-                  </a>
-                )}
+                {proj.link && <PillLink href={proj.link}>GitHub ↗</PillLink>}
                 {proj.youtube && (
-                  <a
-                    href={proj.youtube}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      color: "var(--accent)",
-                      borderColor: "var(--border)",
-                    }}
-                    className="text-sm border px-4 py-1.5 rounded-lg transition-opacity hover:opacity-70"
-                  >
-                    Demo ↗
-                  </a>
+                  <PillLink href={proj.youtube}>Demo ↗</PillLink>
                 )}
               </div>
             </div>
@@ -459,41 +436,14 @@ export default function Portfolio() {
                     Emerson. On the side I help manage my family businesses and
                     have co-founded two startup finalists at OSU accelerators.
                   </p>
-                  <div className="flex flex-wrap gap-3 text-sm">
-                    <a
-                      href="https://www.linkedin.com/in/krush-patel-54324a2a5"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        color: "var(--accent)",
-                        borderColor: "var(--border)",
-                      }}
-                      className="border px-4 py-1.5 rounded-lg transition-opacity hover:opacity-70"
-                    >
+                  <div className="flex flex-wrap gap-3">
+                    <PillLink href="https://www.linkedin.com/in/krush-patel-54324a2a5">
                       LinkedIn ↗
-                    </a>
-                    <a
-                      href="https://github.com/krushpatel04"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        color: "var(--accent)",
-                        borderColor: "var(--border)",
-                      }}
-                      className="border px-4 py-1.5 rounded-lg transition-opacity hover:opacity-70"
-                    >
-                      GitHub ↗
-                    </a>
-                    <a
-                      href="mailto:patel.5355@osu.edu"
-                      style={{
-                        color: "var(--accent)",
-                        borderColor: "var(--border)",
-                      }}
-                      className="border px-4 py-1.5 rounded-lg transition-opacity hover:opacity-70"
-                    >
+                    </PillLink>
+                    <PillLink href="https://github.com/krushpatel04">GitHub ↗</PillLink>
+                    <PillLink href="mailto:patel.5355@osu.edu" external={false}>
                       patel.5355@osu.edu
-                    </a>
+                    </PillLink>
                   </div>
                 </div>
               </motion.div>
