@@ -6,6 +6,11 @@ export default function ThemeToggle() {
   const [dark, setDark] = useState(true);
 
   useEffect(() => {
+    // The inline script in layout.tsx sets data-theme on <html> pre-hydration
+    // to avoid a flash of the wrong theme. Reading it here, post-mount, is
+    // intentional — it syncs this component's state with that already-applied
+    // theme rather than duplicating the anti-flash logic.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDark(document.documentElement.getAttribute("data-theme") !== "light");
   }, []);
 
