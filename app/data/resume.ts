@@ -1,6 +1,15 @@
-export const experience = [
-   {
-  company: "IGS Energy",
+export interface Job {
+  company: string;
+  role: string;
+  period: string;
+  location: string;
+  tech: string[];
+  bullets: string[];
+}
+
+export const experience: Job[] = [
+  {
+    company: "IGS Energy",
     role: "Software Developer (Intern)",
     period: "May 2026 – Present",
     location: "Dublin, OH",
@@ -68,7 +77,16 @@ export const experience = [
   },
 ];
 
-export const projects = [
+export interface Project {
+  name: string;
+  tech: string[];
+  date: string;
+  description: string;
+  link?: string | null;
+  youtube?: string;
+}
+
+export const projects: Project[] = [
   {
     name: "2D Zelda Style Game",
     tech: ["C#", "MonoGame", "C", "Arduino", "ESP32"],

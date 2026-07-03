@@ -7,7 +7,7 @@ import {
   useTransform,
 } from "framer-motion";
 import Image from "next/image";
-import { experience, projects } from "../data/resume";
+import { experience, projects, Job } from "../data/resume";
 import ThemeToggle from "./ThemeToggle";
 import TypeWriter from "./TypeWriter";
 
@@ -34,7 +34,7 @@ function ExperienceCard({
   job,
   index,
 }: {
-  job: (typeof experience)[0];
+  job: Job;
   index: number;
 }) {
   return (
@@ -299,9 +299,9 @@ function ProjectsSection() {
                     GitHub ↗
                   </a>
                 )}
-                {"youtube" in proj && (proj as { youtube: string }).youtube && (
+                {proj.youtube && (
                   <a
-                    href={(proj as { youtube: string }).youtube}
+                    href={proj.youtube}
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{
