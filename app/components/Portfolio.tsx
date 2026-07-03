@@ -372,7 +372,7 @@ export default function Portfolio() {
             kp
           </a>
           <div className="flex items-center gap-1">
-            {["experience", "projects", "skills"].map((s) => (
+            {["experience", "projects"].map((s) => (
               <a
                 key={s}
                 href={`#${s}`}

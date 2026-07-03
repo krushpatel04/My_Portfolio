@@ -87,9 +87,3 @@ export const projects = [
     link: null,
   },
 ];
-
-export const skills: Record<string, string[]> = {
-  Languages: ["C#", "Java", "C", "JavaScript", "TypeScript", "Python", "SQL", "T-SQL", "HTML/CSS"],
-  "Frameworks & Libraries": ["Node.js", "Vue.js", ".NET", "Next.js", "MonoGame", "JUnit", "Make", "GDB"],
-  "Dev Tools": ["Git/GitHub", "Linux/WSL", "Visual Studio", "VS Code", "SSMS", "Jira", "Azure"],
-};
