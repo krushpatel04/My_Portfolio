@@ -136,3 +136,16 @@ Acceptable for this spec; revisit if more projects get added later.
   and Satoshi are Fontshare fonts and will need self-hosting via `next/font/local`
   or a Fontshare-hosted `@font-face` — a build-time detail for the implementation
   plan, not a design decision).
+
+## Extra color, not part of the core palette
+
+| Name | Hex | CMYK | RGB |
+|---|---|---|---|
+| Teal Green | `#022E21` | 96, 0, 28, 82 | 2, 46, 33 |
+
+Found while browsing for more colors. Sits in a different hue family (cool
+green) than the violet/pink harmony Cosmic/Wine Ash/Orchid share, so it isn't
+part of the Work-page token set above — using it there would fight the nebula
+system rather than extend it. Recorded here in case it's useful later for
+something deliberately separate, e.g. a distinct mood for the (deferred)
+Hobbies page.
