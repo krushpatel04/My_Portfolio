@@ -13,10 +13,23 @@ export const experience: Job[] = [
     role: "Software Developer (Intern)",
     period: "May 2026 – Present",
     location: "Dublin, OH",
-    tech: ["C#", ".NET", "Vue.js", "SQL Server", "Azure"],
+    tech: [
+      "C#",
+      ".NET",
+      "React",
+      "TypeScript",
+      "Python/FastAPI",
+      "SSMS",
+      "Azure DevOps",
+      "Playwright",
+      "Octopus",
+      "HubSpot",
+    ],
     bullets: [
-      "Contributed to Choice 360, IGS Energy's core CRM platform used by hundreds of sales reps and customer service agents, resolving production bugs and investigating HubSpot data flows to support an active acquisition with Scana Energy.",
-      "Validated a local Playwright E2E testing framework enabling developers to target local, INT, or QA environments with selective test runs, and documented the full setup in Confluence for team-wide adoption.",
+      "Delivered full-stack features for Choice 360, IGS Energy's core customer CRM, spanning a React 18/TypeScript frontend, ASP.NET Core 10 backend, and SQL Server migration repo with coordinated branching and deploy ordering.",
+      "Built a contract parser at a company hackathon after learning from a director that signed contracts were never recorded, extracting fields into a database that can be cross checked against upstream systems, then pitched it to leadership.",
+      "Built interactive dashboards from Jira and Octopus Deploy history that gave the team visibility into its own support load and release cadence, surfacing where ticket volume was avoidable and how much of the release cycle was unplanned.",
+      "Removed 5,100+ lines of dead legacy code across two systems, an abandoned HubSpot contact-sync subsystem and a retired feature-flag path, sequencing flag deletion across two application deployments so legacy paths couldn't reactivate.",
     ],
   },
   {
@@ -48,8 +61,8 @@ export const experience: Job[] = [
     location: "Columbus, OH",
     tech: ["Node.js", "TypeScript"],
     bullets: [
-      "Finalist (top 6 of 50+ teams) and $5,000 funding recipient in OSU's Best of Student Startups accelerator.",
-      "Built a web-based workflow application enabling insurance adjusters to centralize documentation, auto-generate templates, and share complete claim packets in one click.",
+      "Placed top 6 of 50+ teams and secured $5,000 in funding through OSU's Best of Student Startups accelerator.",
+      "Built a web-based workflow application enabling adjusters to centralize documentation, auto-generate templates, and share complete claim packets in one click, improving speed, reducing reporting errors, and streamlining field workflows.",
       "Led customer discovery with insurance adjusters to validate workflow inefficiencies and define product requirements.",
     ],
   },
@@ -67,8 +80,8 @@ export const experience: Job[] = [
   },
   {
     company: "Patel Family Enterprises",
-    role: "Manager",
-    period: "Jan 2019 – Dec 2025",
+    role: "Owner/Operations Manager",
+    period: "Jan 2019 – Present",
     location: "Parma, OH",
     tech: [],
     bullets: [
