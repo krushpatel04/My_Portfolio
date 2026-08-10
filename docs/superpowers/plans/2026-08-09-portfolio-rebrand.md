@@ -1139,6 +1139,37 @@ export default function Portfolio() {
 
 If the file still carries a `"use client"` directive and nothing in it needs client-side behaviour, remove it — every component in this tree is now a server component. `SmoothScroll` in `layout.tsx` keeps its own `"use client"`.
 
+- [ ] **Step 2b: Restore the Resume link to the header (regression fix)**
+
+The pre-rebrand site shipped a downloadable résumé linked from the nav. Task 5's Header code omitted it — a gap in this plan, caught in review. Restore it, or the rebrand silently removes the highest-value action on a recruiter-facing site.
+
+In `app/components/Header.tsx`, add a Resume anchor as the **first** child of the social-links `<div>`, before the `SOCIALS` map:
+
+```tsx
+          <a
+            href="/My_Portfolio/Krush-Patel-Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "var(--accent)" }}
+            className="text-[11px] sm:text-xs px-2 py-1.5 rounded-lg transition-colors hover:bg-[var(--card)]"
+          >
+            Resume
+          </a>
+```
+
+It deliberately does **not** carry `hidden sm:block` — unlike the social links beside it, it stays visible on mobile, matching the decision already shipped on `main`. The `/My_Portfolio` prefix is required (`next.config.ts` sets `basePath`); `public/Krush-Patel-Resume.pdf` already exists in the repo.
+
+Verify:
+
+```bash
+npm run build
+grep -o 'href="/My_Portfolio/Krush-Patel-Resume.pdf"' out/index.html
+grep -o '<a[^>]*Krush-Patel-Resume.pdf[^>]*>' out/index.html
+ls -la out/Krush-Patel-Resume.pdf
+```
+
+Expected: the href is found once; the printed tag's `class` does NOT contain `hidden`; the PDF exists in the export.
+
 - [ ] **Step 3: Confirm the file actually shrank**
 
 ```bash
@@ -1167,20 +1198,42 @@ Expected: eslint and tsc clean; build succeeds; `CLEAN` printed; dead-file count
 
 - [ ] **Step 5: Visual verification at three widths**
 
+**Read this before screenshotting — `--window-size` lies below 500px.**
+
+Headless Chrome on this machine enforces a **500px minimum window width**. Requesting `--window-size=375` renders the page at 500px wide and then crops the image to 375, producing screenshots that look exactly like clipped, overflowing text when the CSS is perfectly correct. This was confirmed with an on-page `window.innerWidth` probe: it reads `500` for every requested width up to 499.
+
+A false mobile-overflow bug was already chased once on this plan because of it. **Do not use `--window-size` below 500.** For narrow widths, render the page inside an iframe of the target width — the iframe gets a true layout viewport at any size:
+
 ```bash
 npm run build
-mkdir -p /tmp/serve && rm -rf /tmp/serve/My_Portfolio && cp -R out /tmp/serve/My_Portfolio
+rm -rf /tmp/serve && mkdir -p /tmp/serve && cp -R out /tmp/serve/My_Portfolio
+
+cat > /tmp/serve/frame375.html <<'HTML'
+<body style="margin:0;background:#444">
+<iframe src="/My_Portfolio/" style="width:375px;height:4200px;border:0;display:block"></iframe>
+</body>
+HTML
+
 (python3 -m http.server 8902 --directory /tmp/serve > /dev/null 2>&1 &)
 sleep 2
-for w in 375 768 1440; do
+
+# 375px — via iframe, because the window floor makes --window-size unusable here
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+  --headless=new --disable-gpu --no-sandbox --hide-scrollbars \
+  --force-device-scale-factor=1 --window-size=520,4200 --virtual-time-budget=9000 \
+  --screenshot=/tmp/rebrand_375.png "http://localhost:8902/frame375.html"
+
+# 768 and 1440 are above the floor, so the window flag is honest here
+for w in 768 1440; do
   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
     --headless=new --disable-gpu --no-sandbox --hide-scrollbars \
-    --window-size=$w,4200 --virtual-time-budget=8000 \
-    --screenshot=/tmp/rebrand_$w.png \
-    "http://localhost:8902/My_Portfolio/"
+    --force-device-scale-factor=1 --window-size=$w,4200 --virtual-time-budget=9000 \
+    --screenshot=/tmp/rebrand_$w.png "http://localhost:8902/My_Portfolio/"
 done
 pkill -f "http.server 8902"
 ```
+
+In `/tmp/rebrand_375.png` the page occupies the left 375px against a grey surround — that grey is the harness, not the page. Judge only the left 375px.
 
 **Open all three PNGs and check each:**
 

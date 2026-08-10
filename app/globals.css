@@ -1,49 +1,29 @@
 @import "tailwindcss";
 
-/* ── Theme A: Dark (default) ────────────────────────────────────────────── */
+/* ── Palette: one ground, one accent ─────────────────────────────────────
+ * Ground and card are near-black violets; the accent is the cosmic spec's
+ * Orchid, saturated so it reads as an accent rather than a second text
+ * colour. Dark only by design — there is no light theme.
+ * ------------------------------------------------------------------- */
 :root {
-  --bg:     #152820;
-  --fg:     #F0EDE6;
-  --body:   rgba(240, 237, 230, 0.75);
-  --muted:  rgba(240, 237, 230, 0.45);
-  --accent: #C9A227;
-  --border: rgba(240, 237, 230, 0.10);
-  --card:   #1E3A2A;
-}
-
-/* ── Theme C: Light ─────────────────────────────────────────────────────── */
-html[data-theme="light"] {
-  --bg:     #F0EDE6;
-  --fg:     #1B4332;
-  --body:   rgba(27, 67, 50, 0.70);
-  --muted:  rgba(27, 67, 50, 0.40);
-  --accent: #8B6914;
-  --border: rgba(27, 67, 50, 0.12);
-  --card:   #FFFFFF;
+  --bg:     #14131A;
+  --card:   #23212C;
+  --border: #332F40;
+  --fg:     #EDEAF2;
+  --body:   #B9B2C4;
+  --muted:  #948CA3;
+  --accent: #D08FCB;
 }
 
 html {
-  scroll-padding-top: 4.5rem;
+  scroll-padding-top: 5rem;
 }
 
 body {
   background-color: var(--bg);
   color: var(--fg);
-  font-family: var(--font-geist-sans), Arial, sans-serif;
+  font-family: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif;
   overflow-x: hidden;
-}
-
-body.theme-ready {
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-/* Blinking cursor for typing animation */
-@keyframes blink {
-  0%, 100% { opacity: 1 }
-  50%       { opacity: 0 }
-}
-.cursor-blink {
-  animation: blink 1s step-end infinite;
 }
 
 /* Static grain overlay */

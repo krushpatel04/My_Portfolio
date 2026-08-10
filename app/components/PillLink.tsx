@@ -12,7 +12,7 @@ export default function PillLink({
       href={href}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       style={{ color: "var(--accent)", borderColor: "var(--border)" }}
-      className="text-sm border px-4 py-1.5 rounded-lg transition-opacity hover:opacity-70"
+      className="text-sm border px-4 py-1.5 rounded-full transition-colors hover:bg-[var(--card)]"
     >
       {children}
     </a>

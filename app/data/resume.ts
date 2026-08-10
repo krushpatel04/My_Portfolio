@@ -78,17 +78,32 @@ export const experience: Job[] = [
       "Coordinated development of a prototype and pitch deck, presenting to investors to support funding and deployment.",
     ],
   },
-  {
-    company: "Patel Family Enterprises",
-    role: "Owner/Operations Manager",
-    period: "Jan 2019 – Present",
-    location: "Parma, OH",
-    tech: [],
-    bullets: [
-      "Oversee daily operations across 3 family-owned franchise and retail businesses generating $1.5M+ in combined annual revenue, managing 20+ employees across scheduling, vendor relations, POS systems, and inventory management",
-    ],
-  },
 ];
+
+export interface Business {
+  company: string;
+  role: string;
+  period: string;
+  location: string;
+  /** The individual businesses, kept as structured data — the Phase 2
+   *  detail page needs them separately, not as a pre-joined string. */
+  names: string[];
+  bullets: string[];
+  tags: string[];
+}
+
+export const business: Business = {
+  company: "Patel Family Enterprises",
+  role: "Owner / Operations Manager",
+  period: "Jan 2019 – Present",
+  location: "Parma, OH",
+  names: ["Big Creek Convenience", "Tropical Smoothie Cafe", "Signarama"],
+  bullets: [
+    "Independent retail, a food-service franchise, and a B2B sign shop: three operating models, $1.5M+ combined annual revenue, 20+ employees.",
+    "Oversee daily operations across all three — scheduling, hiring, vendor relations, POS systems, and inventory.",
+  ],
+  tags: ["Retail", "Franchise", "Operations", "Hiring", "P&L"],
+};
 
 export interface Project {
   name: string;
