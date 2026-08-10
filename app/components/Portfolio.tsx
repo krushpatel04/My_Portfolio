@@ -357,6 +357,15 @@ export default function Portfolio() {
                 {s}
               </a>
             ))}
+            <a
+              href="/My_Portfolio/Krush-Patel-Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "var(--accent)" }}
+              className="text-sm px-3 py-1.5 rounded-lg transition-colors hover:bg-[var(--card)]"
+            >
+              Resume
+            </a>
             <ThemeToggle />
           </div>
         </div>
