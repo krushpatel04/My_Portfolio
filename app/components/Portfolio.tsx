@@ -10,6 +10,7 @@ import Image from "next/image";
 import { experience, projects, Job } from "../data/resume";
 import PillLink from "./PillLink";
 import TypeWriter from "./TypeWriter";
+import Header from "./Header";
 
 /* ─── Shared primitives ─────────────────────────────────────────────────── */
 
@@ -328,46 +329,7 @@ export default function Portfolio() {
 
   return (
     <>
-      {/* ── Navbar ──────────────────────────────────────────────────────── */}
-      <nav
-        style={{
-          background: "var(--bg)",
-          borderTop: "1px solid var(--accent)",
-          borderBottom: "1px solid var(--accent)",
-        }}
-        className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md"
-      >
-        <div className="max-w-2xl mx-auto px-6 h-14 flex items-center justify-between">
-          <a
-            href="#"
-            style={{ color: "var(--accent)" }}
-            className="font-semibold tracking-tight text-sm"
-          >
-            kp
-          </a>
-          <div className="flex items-center gap-1">
-            {["experience", "projects"].map((s) => (
-              <a
-                key={s}
-                href={`#${s}`}
-                style={{ color: "var(--muted)" }}
-                className="hidden sm:block text-sm px-3 py-1.5 rounded-lg transition-colors hover:bg-[var(--card)] capitalize"
-              >
-                {s}
-              </a>
-            ))}
-            <a
-              href="/My_Portfolio/Krush-Patel-Resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "var(--accent)" }}
-              className="text-sm px-3 py-1.5 rounded-lg transition-colors hover:bg-[var(--card)]"
-            >
-              Resume
-            </a>
-          </div>
-        </div>
-      </nav>
+      <Header />
 
       {/* ── Fixed Hero ──────────────────────────────────────────────────── */}
       {/*
