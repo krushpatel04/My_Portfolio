@@ -14,8 +14,10 @@ export default function Portfolio() {
         <ExperienceSection />
         <BusinessesSection />
         <ProjectsSection />
-        <Footer />
       </main>
+      <div className="max-w-3xl mx-auto px-5">
+        <Footer />
+      </div>
     </>
   );
 }

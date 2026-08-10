@@ -36,7 +36,7 @@ export default function JobCard({ job }: { job: Job }) {
             style={{ color: "var(--body)" }}
             className="text-sm leading-relaxed flex gap-2.5"
           >
-            <span style={{ color: "var(--accent)" }} className="shrink-0">
+            <span aria-hidden="true" style={{ color: "var(--accent)" }} className="shrink-0">
               &mdash;
             </span>
             {b}

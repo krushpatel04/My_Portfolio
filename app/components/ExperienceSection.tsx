@@ -4,7 +4,7 @@ import JobCard from "./JobCard";
 
 export default function ExperienceSection() {
   return (
-    <section className="pt-16">
+    <section className="pt-16" aria-labelledby="experience-label">
       <SectionHeading id="experience" label="Experience" />
       <div className="mt-8 flex flex-col gap-5">
         {experience.map((job, i) => (

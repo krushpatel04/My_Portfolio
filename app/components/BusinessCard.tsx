@@ -24,34 +24,19 @@ export default function BusinessCard({ item }: { item: Business }) {
       <ul className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 mt-4">
         {item.names.map((name, i) => (
           <li key={name} className="flex items-center gap-2.5">
-            {i > 0 && (
-              <span
-                aria-hidden="true"
-                style={{ background: "var(--accent)" }}
-                className="block w-[3px] h-[3px] rounded-full"
-              />
-            )}
             <span
               style={{ color: "var(--fg)" }}
               className="text-sm font-bold"
             >
               {name}
             </span>
-          </li>
-        ))}
-      </ul>
-
-      <ul className="mt-4 flex flex-col gap-2.5">
-        {item.bullets.map((b, i) => (
-          <li
-            key={i}
-            style={{ color: "var(--body)" }}
-            className="text-sm leading-relaxed flex gap-2.5"
-          >
-            <span style={{ color: "var(--accent)" }} className="shrink-0">
-              &mdash;
-            </span>
-            {b}
+            {i < item.names.length - 1 && (
+              <span
+                aria-hidden="true"
+                style={{ background: "var(--accent)" }}
+                className="block w-[3px] h-[3px] rounded-full"
+              />
+            )}
           </li>
         ))}
       </ul>
@@ -61,6 +46,21 @@ export default function BusinessCard({ item }: { item: Business }) {
           <Tag key={t} label={t} />
         ))}
       </div>
+
+      <ul className="mt-4 flex flex-col gap-2.5">
+        {item.bullets.map((b, i) => (
+          <li
+            key={i}
+            style={{ color: "var(--body)" }}
+            className="text-sm leading-relaxed flex gap-2.5"
+          >
+            <span aria-hidden="true" style={{ color: "var(--accent)" }} className="shrink-0">
+              &mdash;
+            </span>
+            {b}
+          </li>
+        ))}
+      </ul>
     </article>
   );
 }
