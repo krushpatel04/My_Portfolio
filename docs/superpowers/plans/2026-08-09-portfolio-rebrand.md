@@ -1139,6 +1139,37 @@ export default function Portfolio() {
 
 If the file still carries a `"use client"` directive and nothing in it needs client-side behaviour, remove it — every component in this tree is now a server component. `SmoothScroll` in `layout.tsx` keeps its own `"use client"`.
 
+- [ ] **Step 2b: Restore the Resume link to the header (regression fix)**
+
+The pre-rebrand site shipped a downloadable résumé linked from the nav. Task 5's Header code omitted it — a gap in this plan, caught in review. Restore it, or the rebrand silently removes the highest-value action on a recruiter-facing site.
+
+In `app/components/Header.tsx`, add a Resume anchor as the **first** child of the social-links `<div>`, before the `SOCIALS` map:
+
+```tsx
+          <a
+            href="/My_Portfolio/Krush-Patel-Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "var(--accent)" }}
+            className="text-[11px] sm:text-xs px-2 py-1.5 rounded-lg transition-colors hover:bg-[var(--card)]"
+          >
+            Resume
+          </a>
+```
+
+It deliberately does **not** carry `hidden sm:block` — unlike the social links beside it, it stays visible on mobile, matching the decision already shipped on `main`. The `/My_Portfolio` prefix is required (`next.config.ts` sets `basePath`); `public/Krush-Patel-Resume.pdf` already exists in the repo.
+
+Verify:
+
+```bash
+npm run build
+grep -o 'href="/My_Portfolio/Krush-Patel-Resume.pdf"' out/index.html
+grep -o '<a[^>]*Krush-Patel-Resume.pdf[^>]*>' out/index.html
+ls -la out/Krush-Patel-Resume.pdf
+```
+
+Expected: the href is found once; the printed tag's `class` does NOT contain `hidden`; the PDF exists in the export.
+
 - [ ] **Step 3: Confirm the file actually shrank**
 
 ```bash
