@@ -760,12 +760,22 @@ Add `import ExperienceSection from "./ExperienceSection";` and render `<Experien
 
 ```bash
 npx eslint app
-grep -rn "100vh\|h-screen\|overflow: *\"hidden\"\|overflow-hidden\|position: *\"sticky\"\|sticky top-\|translateX" app/components/ || echo "NO FORBIDDEN PATTERNS"
+grep -rn "100vh\|h-screen\|overflow: *\"hidden\"\|overflow-hidden\|position: *\"sticky\"\|sticky top-\|translateX" app/components/
 ```
 
-Expected: `NO FORBIDDEN PATTERNS`. If anything prints, it must be removed before continuing — this is the hard requirement.
+**Expected at this point: exactly ONE hit**, and it must be `minHeight: "100vh"` inside the old `ProjectsSection` function still living in `Portfolio.tsx`. That block is deleted in Task 9 — leave it alone here.
 
-(`overflow-x: hidden` in `globals.css` on `body` is allowed and is not matched by this grep, which only scans `app/components/`.)
+**Anything else printing is a failure of this task** and must be removed before continuing: no `100vh` on any Experience markup, no `overflow:hidden` wrapper, no sticky track, no `translateX`. This is the hard requirement.
+
+To confirm the one remaining hit is the expected one and nothing Experience-related survived:
+
+```bash
+grep -rn "100vh\|h-screen\|overflow-hidden\|sticky\|translateX" app/components/JobCard.tsx app/components/ExperienceSection.tsx || echo "EXPERIENCE CLEAN"
+```
+
+Expected: `EXPERIENCE CLEAN`.
+
+(`overflow-x: hidden` in `globals.css` on `body` is allowed and is not matched by these greps, which only scan `app/components/`.)
 
 - [ ] **Step 5: Verify the mobile clipping defect is actually fixed**
 
