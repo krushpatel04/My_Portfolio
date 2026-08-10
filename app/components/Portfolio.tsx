@@ -1,16 +1,10 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-} from "framer-motion";
-import Image from "next/image";
 import { experience, projects, Job } from "../data/resume";
 import PillLink from "./PillLink";
-import TypeWriter from "./TypeWriter";
 import Header from "./Header";
+import Hero from "./Hero";
 
 /* ─── Shared primitives ─────────────────────────────────────────────────── */
 
@@ -302,132 +296,11 @@ function ProjectsSection() {
 /* ─── Main component ────────────────────────────────────────────────────── */
 
 export default function Portfolio() {
-  const [phase, setPhase] = useState<"typing" | "revealed">("typing");
-  const spacerRef = useRef<HTMLDivElement>(null);
-
-  /* Prevent browser from restoring the previous scroll position on reload */
-  useEffect(() => {
-    if ("scrollRestoration" in window.history) {
-      window.history.scrollRestoration = "manual";
-    }
-    window.scrollTo(0, 0);
-  }, []);
-
-  /*
-   * Hero push-back: driven by the 100vh spacer.
-   * offset ["start start", "end start"]:
-   *   progress = 0  →  spacer top   at viewport top  (scroll = 0)
-   *   progress = 1  →  spacer bottom at viewport top  (scroll = 100vh)
-   */
-  const { scrollYProgress } = useScroll({
-    target: spacerRef,
-    offset: ["start start", "end start"],
-  });
-  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.9]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0.85]);
-  const heroBorderRadius = useTransform(scrollYProgress, [0, 1], ["0px", "12px"]);
-
   return (
     <>
       <Header />
 
-      {/* ── Fixed Hero ──────────────────────────────────────────────────── */}
-      {/*
-       * position:fixed keeps it at viewport position 0,0 always.
-       * zIndex:2 sits below the horizontal timeline (zIndex:3), so the
-       * timeline slides up naturally from underneath as you scroll.
-       */}
-      <motion.section
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          scale: heroScale,
-          opacity: heroOpacity,
-          borderRadius: heroBorderRadius,
-          background: "var(--bg)",
-          overflow: "hidden",
-          zIndex: 2,
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <div
-          className="max-w-2xl mx-auto px-6 w-full"
-          style={{ paddingTop: "calc(50vh - 3rem)" }}
-        >
-          <motion.div
-            animate={{ y: phase === "revealed" ? -90 : 0 }}
-            transition={{ duration: 1.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-          >
-            <h1
-              style={{ color: "var(--fg)" }}
-              className="text-5xl sm:text-7xl font-extrabold tracking-tight leading-tight"
-            >
-              <TypeWriter
-                onDone={() => setTimeout(() => setPhase("revealed"), 1500)}
-              />
-            </h1>
-
-            {phase === "revealed" && (
-              <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="mt-10 flex flex-col sm:flex-row items-start gap-8"
-              >
-                <div className="shrink-0">
-                  <Image
-                    src="/My_Portfolio/headShot.jpeg"
-                    alt="Krush Patel"
-                    width={160}
-                    height={200}
-                    className="rounded-xl object-cover"
-                    unoptimized
-                  />
-                </div>
-                <div>
-                  <p
-                    style={{ color: "var(--accent)" }}
-                    className="text-base font-semibold mb-3"
-                  >
-                    Software Developer &middot; CSE @ Ohio State
-                  </p>
-                  <p
-                    style={{ color: "var(--body)" }}
-                    className="text-sm leading-relaxed mb-6 max-w-sm"
-                  >
-                    Senior CSE student at OSU building software and managing
-                    multiple businesses. Currently a full-stack software
-                    developer Intern at IGS Energy and previously co-oped at
-                    Emerson. On the side I help manage my family businesses and
-                    have co-founded two startup finalists at OSU accelerators.
-                  </p>
-                  <div className="flex flex-wrap gap-3">
-                    <PillLink href="https://www.linkedin.com/in/krush-patel-54324a2a5">
-                      LinkedIn ↗
-                    </PillLink>
-                    <PillLink href="https://github.com/krushpatel04">GitHub ↗</PillLink>
-                    <PillLink href="mailto:patel.5355@osu.edu" external={false}>
-                      patel.5355@osu.edu
-                    </PillLink>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </motion.div>
-        </div>
-      </motion.section>
-
-      {/* ── Document flow ────────────────────────────────────────────────── */}
-
-      {/*
-       * Hero spacer (100vh): gives the fixed hero "space" in the document
-       * and drives scrollYProgress for the push-back animation.
-       */}
-      <div ref={spacerRef} style={{ height: "100vh" }} />
+      <Hero />
 
       {/*
        * Horizontal experience timeline.
