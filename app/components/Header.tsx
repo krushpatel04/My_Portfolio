@@ -38,6 +38,15 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-1 shrink-0">
+          <a
+            href="/My_Portfolio/Krush-Patel-Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "var(--accent)" }}
+            className="text-[11px] sm:text-xs px-2 py-1.5 rounded-lg transition-colors hover:bg-[var(--card)]"
+          >
+            Resume
+          </a>
           {SOCIALS.map((l) => (
             <a
               key={l.label}
