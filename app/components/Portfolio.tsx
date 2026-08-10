@@ -5,6 +5,7 @@ import PillLink from "./PillLink";
 import Header from "./Header";
 import Hero from "./Hero";
 import ExperienceSection from "./ExperienceSection";
+import BusinessesSection from "./BusinessesSection";
 
 /* ─── Shared primitives ─────────────────────────────────────────────────── */
 
@@ -105,6 +106,7 @@ export default function Portfolio() {
       <Hero />
 
       <ExperienceSection />
+      <BusinessesSection />
       <ProjectsSection />
     </>
   );
