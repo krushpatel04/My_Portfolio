@@ -9,7 +9,6 @@ import {
 import Image from "next/image";
 import { experience, projects, Job } from "../data/resume";
 import PillLink from "./PillLink";
-import ThemeToggle from "./ThemeToggle";
 import TypeWriter from "./TypeWriter";
 
 /* ─── Shared primitives ─────────────────────────────────────────────────── */
@@ -366,7 +365,6 @@ export default function Portfolio() {
             >
               Resume
             </a>
-            <ThemeToggle />
           </div>
         </div>
       </nav>
