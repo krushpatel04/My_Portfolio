@@ -1198,20 +1198,42 @@ Expected: eslint and tsc clean; build succeeds; `CLEAN` printed; dead-file count
 
 - [ ] **Step 5: Visual verification at three widths**
 
+**Read this before screenshotting — `--window-size` lies below 500px.**
+
+Headless Chrome on this machine enforces a **500px minimum window width**. Requesting `--window-size=375` renders the page at 500px wide and then crops the image to 375, producing screenshots that look exactly like clipped, overflowing text when the CSS is perfectly correct. This was confirmed with an on-page `window.innerWidth` probe: it reads `500` for every requested width up to 499.
+
+A false mobile-overflow bug was already chased once on this plan because of it. **Do not use `--window-size` below 500.** For narrow widths, render the page inside an iframe of the target width — the iframe gets a true layout viewport at any size:
+
 ```bash
 npm run build
-mkdir -p /tmp/serve && rm -rf /tmp/serve/My_Portfolio && cp -R out /tmp/serve/My_Portfolio
+rm -rf /tmp/serve && mkdir -p /tmp/serve && cp -R out /tmp/serve/My_Portfolio
+
+cat > /tmp/serve/frame375.html <<'HTML'
+<body style="margin:0;background:#444">
+<iframe src="/My_Portfolio/" style="width:375px;height:4200px;border:0;display:block"></iframe>
+</body>
+HTML
+
 (python3 -m http.server 8902 --directory /tmp/serve > /dev/null 2>&1 &)
 sleep 2
-for w in 375 768 1440; do
+
+# 375px — via iframe, because the window floor makes --window-size unusable here
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+  --headless=new --disable-gpu --no-sandbox --hide-scrollbars \
+  --force-device-scale-factor=1 --window-size=520,4200 --virtual-time-budget=9000 \
+  --screenshot=/tmp/rebrand_375.png "http://localhost:8902/frame375.html"
+
+# 768 and 1440 are above the floor, so the window flag is honest here
+for w in 768 1440; do
   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
     --headless=new --disable-gpu --no-sandbox --hide-scrollbars \
-    --window-size=$w,4200 --virtual-time-budget=8000 \
-    --screenshot=/tmp/rebrand_$w.png \
-    "http://localhost:8902/My_Portfolio/"
+    --force-device-scale-factor=1 --window-size=$w,4200 --virtual-time-budget=9000 \
+    --screenshot=/tmp/rebrand_$w.png "http://localhost:8902/My_Portfolio/"
 done
 pkill -f "http.server 8902"
 ```
+
+In `/tmp/rebrand_375.png` the page occupies the left 375px against a grey surround — that grey is the harness, not the page. Judge only the left 375px.
 
 **Open all three PNGs and check each:**
 
