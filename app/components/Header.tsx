@@ -42,8 +42,8 @@ export default function Header() {
             href="/My_Portfolio/Krush-Patel-Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: "var(--accent)" }}
-            className="text-[11px] sm:text-xs px-2 py-1.5 rounded-lg transition-colors hover:bg-[var(--card)]"
+            style={{ color: "var(--muted)" }}
+            className="text-[11px] sm:text-xs px-2 py-1.5 rounded-lg transition-colors hover:bg-[var(--card)] hover:text-[var(--accent)]"
           >
             Resume
           </a>

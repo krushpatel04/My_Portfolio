@@ -7,19 +7,33 @@ export default function BusinessCard({ item }: { item: Business }) {
       style={{ background: "var(--card)", borderColor: "var(--border)" }}
       className="border rounded-xl p-5 sm:p-6"
     >
-      <h3
-        style={{ color: "var(--fg)" }}
-        className="text-lg font-bold tracking-tight leading-snug"
-      >
-        {item.company}
-      </h3>
+      <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between sm:gap-5">
+        <div className="min-w-0">
+          <h3
+            style={{ color: "var(--fg)" }}
+            className="text-lg font-bold tracking-tight leading-snug"
+          >
+            {item.company}
+          </h3>
 
-      <p
-        style={{ color: "var(--muted)" }}
-        className="font-mono text-[10px] tracking-[0.09em] uppercase mt-2"
-      >
-        {item.role} &middot; {item.location} &middot; {item.period}
-      </p>
+          <p
+            style={{ color: "var(--muted)" }}
+            className="font-mono text-[10px] tracking-[0.09em] uppercase mt-2"
+          >
+            {item.role}
+          </p>
+        </div>
+
+        {/* Matches JobCard: stacked on phones, right-hand column at sm+. */}
+        <p
+          style={{ color: "var(--muted)" }}
+          className="font-mono text-[10px] tracking-[0.09em] uppercase mt-1 sm:mt-0 sm:text-right shrink-0"
+        >
+          <span className="sm:block">{item.period}</span>
+          <span className="sm:hidden"> &middot; </span>
+          <span className="sm:block">{item.location}</span>
+        </p>
+      </div>
 
       <ul className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 mt-4">
         {item.names.map((name, i) => (

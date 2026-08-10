@@ -10,19 +10,22 @@ export default function ProjectCard({ project }: { project: Project }) {
       style={{ background: "var(--card)", borderColor: "var(--border)" }}
       className="border rounded-xl p-5 sm:p-6"
     >
-      <h3
-        style={{ color: "var(--fg)" }}
-        className="text-lg font-bold tracking-tight leading-snug"
-      >
-        {project.name}
-      </h3>
+      {/* Same title/meta split as JobCard, with only a date on the right. */}
+      <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between sm:gap-5">
+        <h3
+          style={{ color: "var(--fg)" }}
+          className="text-lg font-bold tracking-tight leading-snug min-w-0"
+        >
+          {project.name}
+        </h3>
 
-      <p
-        style={{ color: "var(--muted)" }}
-        className="font-mono text-[10px] tracking-[0.09em] uppercase mt-2"
-      >
-        {project.date}
-      </p>
+        <p
+          style={{ color: "var(--muted)" }}
+          className="font-mono text-[10px] tracking-[0.09em] uppercase mt-2 sm:mt-0 sm:text-right shrink-0"
+        >
+          {project.date}
+        </p>
+      </div>
 
       {project.tech.length > 0 && (
         <div className="flex flex-wrap gap-1.5 mt-4">

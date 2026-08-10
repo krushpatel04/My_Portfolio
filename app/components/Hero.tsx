@@ -1,5 +1,4 @@
 import Image from "next/image";
-import PillLink from "./PillLink";
 
 export default function Hero() {
   return (
@@ -32,7 +31,7 @@ export default function Hero() {
 
           <p
             style={{ color: "var(--body)" }}
-            className="text-sm leading-relaxed mb-6 max-w-md"
+            className="text-sm leading-relaxed max-w-md"
           >
             Senior CSE student at OSU building software and managing multiple
             businesses. Currently a full-stack software developer Intern at IGS
@@ -40,16 +39,6 @@ export default function Hero() {
             my family businesses and have co-founded two startup finalists at
             OSU accelerators.
           </p>
-
-          <div className="flex flex-wrap gap-3">
-            <PillLink href="https://www.linkedin.com/in/krush-patel-54324a2a5">
-              LinkedIn ↗
-            </PillLink>
-            <PillLink href="https://github.com/krushpatel04">GitHub ↗</PillLink>
-            <PillLink href="mailto:patel.5355@osu.edu" external={false}>
-              patel.5355@osu.edu
-            </PillLink>
-          </div>
         </div>
       </div>
     </section>

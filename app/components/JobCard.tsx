@@ -7,19 +7,34 @@ export default function JobCard({ job }: { job: Job }) {
       style={{ background: "var(--card)", borderColor: "var(--border)" }}
       className="border rounded-xl p-5 sm:p-6"
     >
-      <h3
-        style={{ color: "var(--fg)" }}
-        className="text-lg font-bold tracking-tight leading-snug"
-      >
-        {job.company}
-      </h3>
+      <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between sm:gap-5">
+        <div className="min-w-0">
+          <h3
+            style={{ color: "var(--fg)" }}
+            className="text-lg font-bold tracking-tight leading-snug"
+          >
+            {job.company}
+          </h3>
 
-      <p
-        style={{ color: "var(--muted)" }}
-        className="font-mono text-[10px] tracking-[0.09em] uppercase mt-2"
-      >
-        {job.role} &middot; {job.location} &middot; {job.period}
-      </p>
+          <p
+            style={{ color: "var(--muted)" }}
+            className="font-mono text-[10px] tracking-[0.09em] uppercase mt-2"
+          >
+            {job.role}
+          </p>
+        </div>
+
+        {/* Stacks under the title on phones, becomes a right-hand column at sm+,
+            mirroring the résumé PDF's company-left / dates-right layout. */}
+        <p
+          style={{ color: "var(--muted)" }}
+          className="font-mono text-[10px] tracking-[0.09em] uppercase mt-1 sm:mt-0 sm:text-right shrink-0"
+        >
+          <span className="sm:block">{job.period}</span>
+          <span className="sm:hidden"> &middot; </span>
+          <span className="sm:block">{job.location}</span>
+        </p>
+      </div>
 
       {job.tech.length > 0 && (
         <div className="flex flex-wrap gap-1.5 mt-4">
