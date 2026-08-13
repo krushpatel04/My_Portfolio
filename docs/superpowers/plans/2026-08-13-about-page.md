@@ -144,24 +144,42 @@ The `Header`, `Footer`, `<main>`, and both container `<div>`s are gone — the l
 
 - [ ] **Step 5: Verify the homepage is unchanged and chrome renders once**
 
-**Counting note, important:** the exported HTML is minified onto essentially one
-line, so `grep -c` (which counts *lines*) returns `1` no matter how many times a
-pattern occurs. Every "how many" check in this plan therefore uses
-`grep -o … | wc -l`. Using `grep -c` here would let a duplicated header pass.
+**Two counting gotchas, both already handled below. Read before running.**
+
+1. The exported HTML is minified onto essentially one line, so `grep -c`
+   (which counts *lines*) returns `1` regardless of how many times a pattern
+   occurs. A duplicated header would pass. Never use `grep -c` for counting here.
+2. Next embeds an RSC hydration payload inside `<script>` tags that repeats
+   **class strings and text content**. Counting those over the whole file
+   roughly doubles them. Structural tags like `<header` are *not* affected —
+   the payload encodes elements as JSON, not as literal tags.
+
+So: tag counts are safe with `grep -o`, but class/text counts must be taken over
+the rendered markup only. Define this helper once and reuse it in every task:
+
+```bash
+# Count occurrences of a literal string in the RENDERED MARKUP only,
+# excluding Next's RSC hydration payload.
+mcount() { python3 -c "
+import re,sys
+h=open(sys.argv[2],encoding='utf-8').read()
+m=h.split('<body',1)[1].split('<script',1)[0]
+print(len(re.findall(re.escape(sys.argv[1]), m)))
+" "$1" "$2"; }
+```
 
 ```bash
 npx eslint app
 npx tsc --noEmit
 npm run build
 ls out/index.html
-n() { grep -o "$1" "$2" | wc -l | tr -d ' '; }
-echo "header:    $(n '<header' out/index.html)"
-echo "footer:    $(n '<footer' out/index.html)"
-echo "main:      $(n '<main' out/index.html)"
-echo "container: $(n 'max-w-3xl mx-auto px-5' out/index.html)"
+mcount '<header' out/index.html
+mcount '<footer' out/index.html
+mcount '<main' out/index.html
+mcount 'max-w-3xl mx-auto px-5' out/index.html
 ```
 
-Expected: eslint and tsc clean; build succeeds; `out/index.html` exists; header, footer, and main are each `1`. The container count is `2` — one for the header's inner bar, one for the shared container.
+Expected: eslint and tsc clean; build succeeds; `out/index.html` exists; header, footer, and main each `1`. The container count is `2` — one for the header's inner bar, one for the shared container.
 
 - [ ] **Step 6: Verify the export layout changed shape**
 
@@ -325,16 +343,26 @@ Expected: all clean, and `out/about/index.html` exists. If you instead find `out
 
 - [ ] **Step 4: Verify the page's content and chrome**
 
+Use the `mcount` helper defined in Task 1 Step 5 — it counts within the rendered
+markup only, excluding Next's RSC hydration payload, which otherwise inflates
+every text match:
+
 ```bash
-n() { grep -o "$1" "$2" | wc -l | tr -d ' '; }
+mcount() { python3 -c "
+import re,sys
+h=open(sys.argv[2],encoding='utf-8').read()
+m=h.split('<body',1)[1].split('<script',1)[0]
+print(len(re.findall(re.escape(sys.argv[1]), m)))
+" "$1" "$2"; }
+
 F=out/about/index.html
-echo "intro para: $(n 'running businesses since high school' $F)"
-echo "personal h2:$(n 'Outside of work' $F)"
-echo "shows para: $(n 'Peaky Blinders' $F)"
-echo "header:     $(n '<header' $F)"
-echo "footer:     $(n '<footer' $F)"
-echo "h1:         $(n '<h1' $F)"
-echo "h2:         $(n '<h2' $F)"
+mcount 'running businesses since high school' $F
+mcount 'Outside of work' $F
+mcount 'Peaky Blinders' $F
+mcount '<header' $F
+mcount '<footer' $F
+mcount '<h1' $F
+mcount '<h2' $F
 ```
 
 Expected: every value is `1`. Header and footer come from the layout, so `0`
@@ -550,22 +578,31 @@ The `import Image from "next/image";` line is now unused and must be deleted —
 npx eslint app
 npx tsc --noEmit
 npm run build
-n() { grep -o "$1" "$2" | wc -l | tr -d ' '; }
-echo "homepage headShot (want 0): $(n 'headShot' out/index.html)"
-echo "about    headShot (want 1): $(n 'headShot' out/about/index.html)"
+mcount() { python3 -c "
+import re,sys
+h=open(sys.argv[2],encoding='utf-8').read()
+m=h.split('<body',1)[1].split('<script',1)[0]
+print(len(re.findall(re.escape(sys.argv[1]), m)))
+" "$1" "$2"; }
+
+echo -n "homepage headShot (want 0): "; mcount 'headShot' out/index.html
+echo -n "about    headShot (want 1): "; mcount 'headShot' out/about/index.html
 ```
 
 Expected: `0` and `1`. Anything above `0` on the homepage means the image was not removed; `0` on About means Task 2 regressed.
 
+`mcount` matters here specifically: a raw grep over the whole file would find the
+image path a second time inside Next's RSC payload and report `2` on About,
+which looks like a duplicate render but isn't.
+
 - [ ] **Step 3: Confirm the homepage h1 survived**
 
 ```bash
-n() { grep -o "$1" "$2" | wc -l | tr -d ' '; }
-echo "homepage h1 (want 1): $(n '<h1' out/index.html)"
-echo "name present:         $(n 'Krush Patel' out/index.html)"
+echo -n "homepage h1 (want 1): "; mcount '<h1' out/index.html
+echo -n "name in markup:       "; mcount 'Krush Patel' out/index.html
 ```
 
-Expected: exactly one `<h1>`, and the name still present (a count of 2+ is fine here — the name also appears in the page metadata). The hero's `<h1>` is the homepage's only one and the hierarchy must not regress.
+Expected: exactly one `<h1>`, and the name present at least once. The hero's `<h1>` is the homepage's only one and the hierarchy must not regress.
 
 - [ ] **Step 4: Commit**
 
@@ -601,9 +638,14 @@ grep -rn "100vh\|h-screen\|overflow-hidden\|overflow: *\"hidden\"\|position: *\"
 echo "--- routes ---"
 ls out/index.html out/about/index.html
 echo "--- chrome renders once per page ---"
-n() { grep -o "$1" "$2" | wc -l | tr -d ' '; }
+mcount() { python3 -c "
+import re,sys
+h=open(sys.argv[2],encoding='utf-8').read()
+m=h.split('<body',1)[1].split('<script',1)[0]
+print(len(re.findall(re.escape(sys.argv[1]), m)))
+" "$1" "$2"; }
 for f in out/index.html out/about/index.html; do
-  echo "$f  header=$(n '<header' $f) footer=$(n '<footer' $f) main=$(n '<main' $f)"
+  echo "$f  header=$(mcount '<header' $f) footer=$(mcount '<footer' $f) main=$(mcount '<main' $f)"
 done
 ```
 
