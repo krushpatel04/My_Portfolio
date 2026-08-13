@@ -19,7 +19,8 @@ so nothing pointed at a page that did not exist. This spec builds those pages.
 ## Scope
 
 **In scope:** `/about`, `/businesses`, the Businesses card becoming clickable,
-About as a fourth header item, and the routing/navigation changes those require.
+About as a fourth header item, the routing/navigation changes those require, and
+**moving the headshot from the homepage hero to the About page**.
 
 **Explicitly out of scope — deferred again, deliberately:**
 
@@ -169,9 +170,30 @@ employees. I've been running them since 2019.
 > It's the only one of the three that's business-to-business, which means real
 > quotes, real deadlines, and customers who need a thing made by a date.
 
+## The headshot moves
+
+`public/headShot.jpeg` is **removed from `Hero.tsx` and used on `/about`
+instead.** It is the same asset — no new image, no second copy.
+
+Rationale: the OG link-preview card already carries the face, so the first
+impression a recruiter gets includes it either way. On the homepage the photo is
+decoration; on About it is content. This also matches the reference site
+(`tanishmakadia.com`), whose hero is purely typographic.
+
+**Consequent hero change:** the hero currently lays out as
+`flex flex-col sm:flex-row items-start gap-8` with the image beside a text
+column whose bio is capped at `max-w-md`. With the image gone, the flex wrapper
+is unnecessary and the bio cap widens to `max-w-xl` — at `max-w-md` in a
+full-width column the text looks stranded. The hero's vertical padding stays as
+is; it will naturally shorten because its height was being set by the 200px
+image rather than the text.
+
 ## `/about` page
 
-Structure: casual photo, professional half, personal half.
+Structure: headshot, professional half, personal half.
+
+The photo uses the same `/My_Portfolio/headShot.jpeg` path and the same
+`next/image` treatment the hero used (160×200, `rounded-xl`, `unoptimized`).
 
 ### Copy (draft — edit at review)
 
@@ -213,15 +235,15 @@ Structure: casual photo, professional half, personal half.
 
 ## Open items and their defaults
 
-These are pending user input. Each has a defined fallback so implementation is
+One item is pending user input, with a defined fallback so implementation is
 never blocked:
 
-1. **Casual photo.** If not supplied before implementation, the About page ships
-   **with no photo**. It does not fall back to the hero headshot (repetitive for
-   anyone arriving from the homepage) and does not use a placeholder image.
-2. **PC specs.** If not supplied, the sentence ships as "I built my own PC and I
+1. **PC specs.** If not supplied, the sentence ships as "I built my own PC and I
    game on it most nights." with the specs clause removed entirely — no empty
    list, no "TBD".
+
+*(The casual-photo question is closed: the existing headshot moves to About, so
+no new asset is needed.)*
 
 ## Verification
 
@@ -233,6 +255,8 @@ never blocked:
   `/My_Portfolio/businesses/`; the Experience and Projects cards have no chevron
   and no link.
 - All three pages render Header and Footer once each — not zero, not twice.
+- `headShot.jpeg` appears **exactly once** across the built site: on
+  `/about`, not on the homepage. Grep both exports to confirm.
 - Plain document flow preserved: no `100vh`, `h-screen`, `overflow:hidden`
   wrapper, sticky track, or `translateX` anywhere in `app/`.
 - **Narrow-width check via the iframe harness, not `--window-size` below 500px**
