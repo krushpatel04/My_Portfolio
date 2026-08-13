@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import SmoothScroll from "./components/SmoothScroll";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 const satoshi = localFont({
   variable: "--font-satoshi",
@@ -60,7 +62,15 @@ export default function RootLayout({
       <body className={`${satoshi.variable} antialiased`}>
         <SmoothScroll>
           <div className="grain" aria-hidden="true" />
-          {children}
+          {/* Header is fixed and full-width, and applies its own max-w-3xl to
+              its inner bar — it must stay OUTSIDE the shared container or its
+              background stops reaching the viewport edges. */}
+          <Header />
+          <div className="max-w-3xl mx-auto px-5">
+            <main>{children}</main>
+            {/* Outside <main> so it exposes a contentinfo landmark. */}
+            <Footer />
+          </div>
         </SmoothScroll>
       </body>
     </html>
