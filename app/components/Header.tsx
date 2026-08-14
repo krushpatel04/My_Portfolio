@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const SECTIONS = ["experience", "businesses", "projects"] as const;
 
 /* The explicit type matters: without it TypeScript infers a union from the
@@ -16,25 +18,35 @@ export default function Header() {
       className="fixed top-0 left-0 right-0 z-50 border-b backdrop-blur-md"
     >
       <div className="max-w-3xl mx-auto px-5 h-14 flex items-center justify-between gap-3">
-        <a
-          href="#top"
+        <Link
+          href="/#top"
           style={{ color: "var(--fg)" }}
           className="font-bold tracking-tight text-sm shrink-0"
         >
           kp
-        </a>
+        </Link>
 
         <nav className="flex items-center gap-1 sm:gap-2">
           {SECTIONS.map((s) => (
-            <a
+            /* `/#hash` rather than `#hash`: from /about a bare hash resolves
+               against the current page and does nothing. next/link also
+               prepends basePath, which a hand-written <a> would not. */
+            <Link
               key={s}
-              href={`#${s}`}
+              href={`/#${s}`}
               style={{ color: "var(--body)" }}
               className="text-[11px] sm:text-sm px-1.5 sm:px-3 py-1.5 rounded-lg capitalize transition-colors hover:bg-[var(--card)] hover:text-[var(--fg)]"
             >
               {s}
-            </a>
+            </Link>
           ))}
+          <Link
+            href="/about"
+            style={{ color: "var(--body)" }}
+            className="text-[11px] sm:text-sm px-1.5 sm:px-3 py-1.5 rounded-lg transition-colors hover:bg-[var(--card)] hover:text-[var(--fg)]"
+          >
+            About
+          </Link>
         </nav>
 
         <div className="flex items-center gap-1 shrink-0">
