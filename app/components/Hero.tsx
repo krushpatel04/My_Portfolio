@@ -14,7 +14,7 @@ export default function Hero() {
 
       <p
         style={{ color: "var(--body)" }}
-        className="text-sm leading-relaxed max-w-xl"
+        className="text-base leading-[1.7] max-w-xl"
       >
         Senior CSE student at OSU building software and managing multiple
         businesses. Currently a full-stack software developer Intern at IGS
