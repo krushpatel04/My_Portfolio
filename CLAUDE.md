@@ -70,7 +70,13 @@ works perfectly in dev and 404s in production.
 `/My_Portfolio/about` 308-redirects to `/about/`. That redirect is correct, not
 an error.
 
-**6. Apostrophes are HTML entities in the source** (`&rsquo;`), so grepping
+**6. Tailwind preflight forces `img { height: auto }`.** A `next/image`
+`height` that doesn't match the source's true aspect ratio is silently
+overridden, so the browser reserves the wrong box and the page shifts on load.
+The headshot is 320×480; it must be declared at that 2:3 ratio (currently
+168×252). This shipped broken twice before anyone noticed.
+
+**7. Apostrophes are HTML entities in the source** (`&rsquo;`), so grepping
 built output for text containing them fails. Grep phrases without apostrophes.
 
 ## Hard constraint: plain document flow
@@ -102,7 +108,7 @@ accent breaks it.
 | `--card` | `#23212C` | card surface |
 | `--border` | `#332F40` | hairlines |
 | `--fg` | `#EDEAF2` | headings |
-| `--body` | `#B9B2C4` | body text |
+| `--body` | `#CFC8D8` | body text |
 | `--muted` | `#948CA3` | meta/labels |
 | `--accent` | `#D08FCB` | links, list marks, tag outlines |
 
@@ -110,9 +116,18 @@ Accent goes on links, list marks, and tag outlines only — never body text,
 never a background fill. **Dark only**; there is no light theme and no
 `ThemeToggle` (both were deliberately removed).
 
+The three text steps are a deliberate ladder, measured in L*: `--fg` 93.1,
+`--body` 81.6, `--muted` 59.6. Keep the gaps — closing them is what makes the
+page go flat. `--fg` stays `#EDEAF2` rather than pure white: white is only
+6.9 L* brighter, glares on this ground, and loses the violet cast.
+
 Typeface: **Satoshi** (400/700), self-hosted via `next/font/local`, plus
 Tailwind's `font-mono` stack for small meta labels. One typeface is deliberate —
 an earlier three-face design was scrapped.
+
+**There is no Medium or SemiBold**, so `font-weight: 500` silently resolves to
+400, and 700 across a paragraph reads as shouting. To make text feel heavier,
+reach for **size, leading, or contrast** — not weight.
 
 Heading hierarchy: page `<h1>` → section `<h2>` → card `<h3>`. Do not skip
 levels; this was fixed once already.
@@ -134,13 +149,22 @@ to its inner bar, and nesting double-constrains it. Page components render only
 their own content; adding a `<main>` or container renders it twice.
 
 Routes: `/` (`Portfolio.tsx` → Hero, Experience, Businesses, Projects),
-`/about`, and `not-found.tsx`. That last one exists because hoisting the chrome
+`/about` (masthead: `h1` "About" opposite a right-aligned mono facts stack;
+then a plain `168px 1fr` grid, photo left and prose right, collapsing to one
+column below `sm`), and `not-found.tsx`. That last one exists because hoisting the chrome
 wrapped Next's built-in 404 boundary, which injects `body{background:#fff}` and
 beat the site stylesheet.
 
 Header nav: section anchors and About are visible at **every** width; the
 social links are the ones that carry `hidden sm:block`. That asymmetry is
 deliberate — section anchors used to vanish on mobile and that was a bug.
+
+Resume, LinkedIn, GitHub, and Email are **icons**, not text — four hand-authored
+inline SVGs in `app/components/Icons.tsx`, one 24×24 box and a 2 stroke,
+`currentColor` so they inherit the header's hover. No icon package. Because
+they carry no text, each link needs an `aria-label` and a `title`, and the svg
+stays `aria-hidden`. Icons bought ~35px at 375px and the three socials would
+need ~99px, so they still don't fit on mobile; the footer keeps text labels.
 
 ## Content
 
@@ -170,6 +194,8 @@ plus greps against `out/` and screenshots. Judge test evidence by that standard.
 `docs/superpowers/specs/` and `docs/superpowers/plans/`. Recent work, newest
 first:
 
+- `2026-08-27-about-page-redesign-design.md` — the current `/about` layout,
+  the header icons, and the type/contrast rules above
 - `2026-08-13-portfolio-phase-2-design.md` — About page. **Also contains
   drafted, approved copy for a `/businesses` detail page under "Deferred" —
   don't lose it.**
@@ -177,6 +203,13 @@ first:
 - `2026-08-09-resume-content-update-design.md` — résumé sync + PDF
 
 ## Deferred work
+
+**Waiting on Krush:** his own About and Hero copy. The text on `/about`
+today is a placeholder written to be short and personable; the numbers it
+dropped are all still in `app/data/resume.ts`. Swapping it in is a drop-in
+edit with no structural work. A location line would also fit in the masthead
+facts — left off rather than guessed, since it's Columbus for OSU and Parma
+for the shops.
 
 **Next feature:** the `/businesses` detail page. Copy is already written (see
 above). Needs no new infrastructure now that `/about` proved the pattern —
@@ -187,7 +220,7 @@ projects are further out; no story is written for them yet.
 **Small cleanups, none urgent:**
 - `framer-motion` is an unused dependency.
 - `app/fonts/Melodrama-SemiBold.woff2` is untracked but not gitignored — a
-  `git add -A` would commit a font the site doesn't use.
+  `git add -A` would commit a font the site doesn't use. Stage files by name.
 - `.claude/worktrees/cosmic-redesign` is a parked, now-superseded branch living
   inside the repo. It is the source of the lint breakage above and is safe to
   delete. The `rebrand-phase-1` and `about-page` branches are merged and dead.
