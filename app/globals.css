@@ -4,13 +4,18 @@
  * Ground and card are near-black violets; the accent is the cosmic spec's
  * Orchid, saturated so it reads as an accent rather than a second text
  * colour. Dark only by design — there is no light theme.
+ *
+ * The three text steps are a deliberate ladder, measured in L*: fg 93.1,
+ * body 81.6, muted 59.6. Satoshi ships only 400 and 700, so there is no
+ * medium weight to lean on — contrast is what separates the levels, and
+ * closing these gaps is what makes the page go flat.
  * ------------------------------------------------------------------- */
 :root {
   --bg:     #14131A;
   --card:   #23212C;
   --border: #332F40;
   --fg:     #EDEAF2;
-  --body:   #B9B2C4;
+  --body:   #CFC8D8;
   --muted:  #948CA3;
   --accent: #D08FCB;
 }

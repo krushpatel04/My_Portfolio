@@ -3,7 +3,7 @@
  * hover states instead of carrying their own. No icon dependency: four glyphs
  * is not worth a package, and there is already one unused one in here.
  *
- * All four share a 24x24 box and a 1.75 stroke so they read as one set. */
+ * All four share a 24x24 box and a 2 stroke so they read as one set. */
 
 type IconProps = { className?: string };
 
@@ -13,7 +13,7 @@ const base = {
   height: "1em",
   fill: "none",
   stroke: "currentColor",
-  strokeWidth: 1.75,
+  strokeWidth: 2,
   strokeLinecap: "round" as const,
   strokeLinejoin: "round" as const,
   "aria-hidden": true,

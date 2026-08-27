@@ -28,7 +28,7 @@ export default function About() {
             <li
               key={f.label}
               style={{ color: "var(--muted)" }}
-              className="font-mono text-[11px] leading-snug"
+              className="font-mono text-[12px] leading-snug"
             >
               {f.href ? (
                 <a
@@ -67,7 +67,7 @@ export default function About() {
         <div className="flex flex-col gap-9">
           <div
             style={{ color: "var(--body)" }}
-            className="flex flex-col gap-4 text-sm leading-relaxed"
+            className="flex flex-col gap-4 text-base leading-[1.7]"
           >
             <p>
               Hi! I&rsquo;m Krush, an undergrad CSE student at The Ohio State
@@ -86,13 +86,13 @@ export default function About() {
           <div className="flex flex-col gap-4.5">
             <h2
               style={{ color: "var(--fg)" }}
-              className="text-2xl font-bold tracking-tight"
+              className="text-[26px] font-bold tracking-tight"
             >
               Outside of work
             </h2>
             <div
               style={{ color: "var(--body)" }}
-              className="flex flex-col gap-4 text-sm leading-relaxed"
+              className="flex flex-col gap-4 text-base leading-[1.7]"
             >
               <p>
                 I don&rsquo;t sit still much. I lift, I ski in the winter, and
