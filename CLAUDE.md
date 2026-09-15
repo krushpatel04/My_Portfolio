@@ -209,9 +209,10 @@ first:
 
 ## Deferred work
 
-**Waiting on Krush:** his own Hero copy. The `/about` prose is now his own
-words (2026-09-15) — treat it as verbatim, like the résumé strings; the only
-edit was splitting it into three paragraphs. It is deliberately all personal,
+**His own copy is in** (2026-09-15) — the Hero bio and the `/about` prose are
+both Krush's words. Treat them as verbatim, like the résumé strings. The Hero
+bio is unedited; the only change to the About blurb was splitting it into
+three paragraphs. It is deliberately all personal,
 with no work content and no "Outside of work" heading; the masthead facts are
 just school and email (IGS Energy was removed at his request). A location line
 would fit in the facts, but his blurb says "Cleveland area", so match that

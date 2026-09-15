@@ -16,11 +16,13 @@ export default function Hero() {
         style={{ color: "var(--body)" }}
         className="text-base leading-[1.7] max-w-xl"
       >
-        Senior CSE student at OSU building software and managing multiple
-        businesses. Currently a full-stack software developer Intern at IGS
-        Energy and previously co-oped at Emerson. On the side I help manage my
-        family businesses and have co-founded two startup finalists at OSU
-        accelerators.
+        I&rsquo;m a senior studying Computer Science and Engineering at Ohio
+        State. I&rsquo;m a full-stack software developer intern at IGS Energy,
+        where I work on the internal CRM the company&rsquo;s sales and service
+        teams rely on, and I previously completed a software development co-op
+        at Emerson. I&rsquo;ve also helped run my family&rsquo;s three
+        businesses since 2019 and co-founded two startups that went through OSU
+        accelerator programs.
       </p>
     </section>
   );
