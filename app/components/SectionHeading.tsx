@@ -8,7 +8,10 @@ export default function SectionHeading({
   const labelId = `${id}-label`;
 
   return (
-    <div id={id} className="scroll-mt-20">
+    /* No scroll-margin here: `html { scroll-padding-top: 5rem }` already
+       clears the 56px header. The two used to stack, landing headings 160px
+       down instead of 80. */
+    <div id={id}>
       <h2
         id={labelId}
         style={{ color: "var(--muted)" }}

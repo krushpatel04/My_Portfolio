@@ -159,6 +159,21 @@ Header nav: section anchors and About are visible at **every** width; the
 social links are the ones that carry `hidden sm:block`. That asymmetry is
 deliberate — section anchors used to vanish on mobile and that was a bug.
 
+**Section jumps** (the three anchors and the logo's `/#top`) go through
+`SectionLink`, not bare `<Link>`, and every jump should land the target 80px
+from the top — just under the header. Three things make that true; break any
+one and a jump silently lands wrong:
+- `SectionLink` re-scrolls when the URL already has that hash. Next's router
+  only scrolls on a hash *change*, so a second click on Businesses did nothing.
+- `html { scroll-padding-top: 5rem }` is the only offset. Adding
+  `scroll-margin` to a target stacks with it (that landed headings at 160px).
+- Lenis runs with `stopInertiaOnNavigate`. Otherwise a click made while
+  trackpad momentum is still easing is dragged back by Lenis.
+
+Headless tests of that last one need *trusted* wheel input — CDP
+`Input.dispatchMouseEvent` type `mouseWheel`. Synthetic `WheelEvent`s are
+ignored by Lenis, so a test built on them passes without testing anything.
+
 Resume, LinkedIn, GitHub, and Email are **icons**, not text — four hand-authored
 inline SVGs in `app/components/Icons.tsx`, one 24×24 box and a 2 stroke,
 `currentColor` so they inherit the header's hover. No icon package. Because
@@ -251,8 +266,6 @@ projects are further out; no story is written for them yet.
 - `/about` has no `openGraph` block, so sharing that URL shows the homepage's
   card. Fine (same person, same site) but ~8 lines to fix properly.
 - No `aria-current` on the active nav item.
-- Anchors land ~160px down because `scroll-padding-top: 5rem` and `scroll-mt-20`
-  stack under a 56px header.
 
 ## Working with Krush
 

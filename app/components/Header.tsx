@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ResumeIcon } from "./Icons";
+import SectionLink from "./SectionLink";
 import SocialLinks, { ICON_LINK } from "./SocialLinks";
 
 const SECTIONS = ["experience", "businesses", "projects"] as const;
@@ -19,7 +20,7 @@ export default function Header() {
             that at 320px the group can't be squeezed and spill "About" over
             the Resume icon — overflow goes into the gutter instead. */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-          <Link href="/#top" className="shrink-0">
+          <SectionLink id="top" className="shrink-0">
             {/* Krush's bonsai, recut from the black-on-cream original into
                 --fg ink on clear, since black vanishes on this ground. Shipped
                 at 3x (87x108); 29x36 is that same ratio, and it has to be —
@@ -33,7 +34,7 @@ export default function Header() {
               unoptimized
               priority
             />
-          </Link>
+          </SectionLink>
 
           {/* ml-1 / sm:ml-3 match the nav items' own padding, so the rule sits
               optically centred between the tree and the first word. Hidden
@@ -49,14 +50,14 @@ export default function Header() {
               /* `/#hash` rather than `#hash`: from /about a bare hash resolves
                  against the current page and does nothing. next/link also
                  prepends basePath, which a hand-written <a> would not. */
-              <Link
+              <SectionLink
                 key={s}
-                href={`/#${s}`}
+                id={s}
                 style={{ color: "var(--body)" }}
                 className="text-[11px] sm:text-sm px-1 sm:px-3 py-1.5 rounded-lg capitalize transition-colors hover:bg-[var(--card)] hover:text-[var(--fg)]"
               >
                 {s}
-              </Link>
+              </SectionLink>
             ))}
             <Link
               href="/about"
