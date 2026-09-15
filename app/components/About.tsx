@@ -6,7 +6,6 @@ import Image from "next/image";
  * guessed. */
 const FACTS: { label: string; href?: string }[] = [
   { label: "OSU ’27, CSE" },
-  { label: "IGS Energy" },
   { label: "patel.5355@osu.edu", href: "mailto:patel.5355@osu.edu" },
 ];
 
@@ -64,44 +63,30 @@ export default function About() {
           />
         </div>
 
-        <div className="flex flex-col gap-9">
-          <div
-            style={{ color: "var(--body)" }}
-            className="flex flex-col gap-4 text-base leading-[1.7]"
-          >
-            <p>
-              Hi! I&rsquo;m Krush, an undergrad CSE student at The Ohio State
-              University and a full-stack developer at IGS Energy, working on
-              the CRM their sales and service teams use every day.
-            </p>
-            <p>
-              I&rsquo;ve also been running my family&rsquo;s three businesses
-              since 2019 &mdash; a corner store, a Tropical Smoothie Cafe, and a
-              sign shop. That&rsquo;s most of why I build software the way I do:
-              I&rsquo;ve been the person stuck with the bad system, so I start
-              with whoever has to use it.
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-4.5">
-            <h2
-              style={{ color: "var(--fg)" }}
-              className="text-[26px] font-bold tracking-tight"
-            >
-              Outside of work
-            </h2>
-            <div
-              style={{ color: "var(--body)" }}
-              className="flex flex-col gap-4 text-base leading-[1.7]"
-            >
-              <p>
-                I don&rsquo;t sit still much. I lift, I ski in the winter, and
-                I&rsquo;ll play just about anything you put in front of me.
-                I&rsquo;m into cars, I built the PC I game on most nights, and
-                right now I&rsquo;m working through Gen V.
-              </p>
-            </div>
-          </div>
+        {/* Krush's own words, verbatim. The paragraph breaks are the only
+            edit: as one block it ran ~14 lines in this column. */}
+        <div
+          style={{ color: "var(--body)" }}
+          className="flex flex-col gap-4 text-base leading-[1.7]"
+        >
+          <p>
+            Hey! I&rsquo;m Krush, a Computer Science and Engineering student at
+            Ohio State. I&rsquo;m originally from the Cleveland area, which
+            means I&rsquo;ve had plenty of practice getting my hopes up for our
+            sports teams every season (and plenty of practice being let down).
+          </p>
+          <p>
+            I don&rsquo;t sit still much, so outside of school and work,
+            you&rsquo;ll find me on the slopes in the winter and on a soccer
+            field in the summer. Most days I&rsquo;m lifting too. I&rsquo;m a
+            huge car guy, so if you bring up cars, you might be stuck with me
+            for a while lol.
+          </p>
+          <p>
+            At night I&rsquo;m usually back to my gaming roots (Overwatch right
+            now) or catching up on a show (currently Gen V). This year I&rsquo;m
+            also playing fantasy football for the first time, so wish me luck!
+          </p>
         </div>
       </div>
     </article>
