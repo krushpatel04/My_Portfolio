@@ -164,7 +164,12 @@ inline SVGs in `app/components/Icons.tsx`, one 24×24 box and a 2 stroke,
 `currentColor` so they inherit the header's hover. No icon package. Because
 they carry no text, each link needs an `aria-label` and a `title`, and the svg
 stays `aria-hidden`. Icons bought ~35px at 375px and the three socials would
-need ~99px, so they still don't fit on mobile; the footer keeps text labels.
+need ~99px, so they still don't fit in the header on mobile.
+
+The three socials live in **one list**, `app/components/SocialLinks.tsx`,
+rendered by both `Header` (17px, `hidden sm:block`) and `Footer` (19px, every
+width — so the footer is where phones reach them). Change a link there, never
+in either consumer.
 
 ## Content
 
@@ -204,12 +209,13 @@ first:
 
 ## Deferred work
 
-**Waiting on Krush:** his own About and Hero copy. The text on `/about`
-today is a placeholder written to be short and personable; the numbers it
-dropped are all still in `app/data/resume.ts`. Swapping it in is a drop-in
-edit with no structural work. A location line would also fit in the masthead
-facts — left off rather than guessed, since it's Columbus for OSU and Parma
-for the shops.
+**Waiting on Krush:** his own Hero copy. The `/about` prose is now his own
+words (2026-09-15) — treat it as verbatim, like the résumé strings; the only
+edit was splitting it into three paragraphs. It is deliberately all personal,
+with no work content and no "Outside of work" heading; the masthead facts are
+just school and email (IGS Energy was removed at his request). A location line
+would fit in the facts, but his blurb says "Cleveland area", so match that
+rather than guessing Columbus or Parma.
 
 **Next feature:** the `/businesses` detail page. Copy is already written (see
 above). Needs no new infrastructure now that `/about` proved the pattern —
