@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ResumeIcon } from "./Icons";
 import SocialLinks, { ICON_LINK } from "./SocialLinks";
@@ -10,13 +11,23 @@ export default function Header() {
       style={{ background: "var(--bg)", borderColor: "var(--border)" }}
       className="fixed top-0 left-0 right-0 z-50 border-b backdrop-blur-md"
     >
-      <div className="max-w-3xl mx-auto px-5 h-14 flex items-center justify-between gap-3">
-        <Link
-          href="/#top"
-          style={{ color: "var(--fg)" }}
-          className="font-bold tracking-tight text-sm shrink-0"
-        >
-          kp
+      {/* The mobile spacing (gap-2, nav px-1) is as tight as it is so the
+          Resume icon stays on screen at 320px; at 375px there's room to spare. */}
+      <div className="max-w-3xl mx-auto px-5 h-14 flex items-center justify-between gap-2 sm:gap-3">
+        <Link href="/#top" className="shrink-0">
+          {/* Krush's bonsai, recut from the black-on-cream original into
+              --fg ink on clear, since black vanishes on this ground. Shipped
+              at 3x (87x108); 29x36 is that same ratio, and it has to be —
+              preflight's `height: auto` overrides a mismatched height. The
+              src spells out basePath because next/image doesn't add it. */}
+          <Image
+            src="/My_Portfolio/logo.png"
+            alt="Krush Patel, home"
+            width={29}
+            height={36}
+            unoptimized
+            priority
+          />
         </Link>
 
         <nav className="flex items-center gap-1 sm:gap-2">
@@ -28,7 +39,7 @@ export default function Header() {
               key={s}
               href={`/#${s}`}
               style={{ color: "var(--body)" }}
-              className="text-[11px] sm:text-sm px-1.5 sm:px-3 py-1.5 rounded-lg capitalize transition-colors hover:bg-[var(--card)] hover:text-[var(--fg)]"
+              className="text-[11px] sm:text-sm px-1 sm:px-3 py-1.5 rounded-lg capitalize transition-colors hover:bg-[var(--card)] hover:text-[var(--fg)]"
             >
               {s}
             </Link>
@@ -36,7 +47,7 @@ export default function Header() {
           <Link
             href="/about"
             style={{ color: "var(--body)" }}
-            className="text-[11px] sm:text-sm px-1.5 sm:px-3 py-1.5 rounded-lg transition-colors hover:bg-[var(--card)] hover:text-[var(--fg)]"
+            className="text-[11px] sm:text-sm px-1 sm:px-3 py-1.5 rounded-lg transition-colors hover:bg-[var(--card)] hover:text-[var(--fg)]"
           >
             About
           </Link>

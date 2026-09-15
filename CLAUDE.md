@@ -166,6 +166,17 @@ they carry no text, each link needs an `aria-label` and a `title`, and the svg
 stays `aria-hidden`. Icons bought ~35px at 375px and the three socials would
 need ~99px, so they still don't fit in the header on mobile.
 
+**The logo** is Krush's bonsai (originals: `~/Downloads/personal_bonsai_logo_*.png`,
+black ink on cream). Neither original works on this ground — the "transparent"
+one still carries the cream at ~45% alpha. The shipped files are recut from
+the warm-background version: ink density becomes alpha, recoloured. The header
+mark (`public/logo.png`, 87×108 shown at 29×36) is `--fg` ink and crops out the
+two dots, which read as specks at that size. The favicon (`app/icon.png`) and
+`app/apple-icon.png` are `--bg` ink on the accent square, keeping the old `kp`
+favicon's silhouette. The header's mobile spacing is tuned so the Resume icon
+stays on screen at 320px with the mark's extra width — re-measure if you
+widen anything in that bar.
+
 The three socials live in **one list**, `app/components/SocialLinks.tsx`,
 rendered by both `Header` (17px, `hidden sm:block`) and `Footer` (19px, every
 width — so the footer is where phones reach them). Change a link there, never
