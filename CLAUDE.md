@@ -173,9 +173,15 @@ the warm-background version: ink density becomes alpha, recoloured. The header
 mark (`public/logo.png`, 87×108 shown at 29×36) is `--fg` ink and crops out the
 two dots, which read as specks at that size. The favicon (`app/icon.png`) and
 `app/apple-icon.png` are `--bg` ink on the accent square, keeping the old `kp`
-favicon's silhouette. The header's mobile spacing is tuned so the Resume icon
-stays on screen at 320px with the mark's extra width — re-measure if you
-widen anything in that bar.
+favicon's silhouette.
+
+The header bar is `[mark] | nav ………… icons`: mark, a 1px divider, and nav
+form one `shrink-0` left group. The mobile spacing is tuned to the pixel for
+320px, where the divider is hidden (it costs 13px that isn't there). If you
+widen anything in that bar, re-measure — and measure the *children's* edges
+(the last nav link vs. the Resume icon), not the group's box. A squeezed
+group reports a box that fits while its contents overlap; that exact misread
+happened once.
 
 The three socials live in **one list**, `app/components/SocialLinks.tsx`,
 rendered by both `Header` (17px, `hidden sm:block`) and `Footer` (19px, every
