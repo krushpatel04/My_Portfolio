@@ -20,6 +20,8 @@
   --accent: #D08FCB;
 }
 
+/* The one offset for every anchor jump: the 56px fixed header plus 24px of
+ * air. Don't add scroll-margin to targets as well — the two add up. */
 html {
   scroll-padding-top: 5rem;
 }
